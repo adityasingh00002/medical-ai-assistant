@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History - Medical AI Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">+</span>
+    <span class="brand-name">Medical AI Assistant</span>
+  </div>
+  <nav>
+    <a href="/">Check symptoms</a>
+    <a href="/history">History</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <p class="eyebrow">Stored in MongoDB</p>
+    <h1>Consultation history</h1>
+  </section>
+
+  {% if records %}
+  <div class="history-list">
+    {% for r in records %}
+    <div class="history-item">
+      <div class="history-item-top">
+        <strong>{{ r.predicted_disease }}</strong>
+        <span class="history-time">{{ r.timestamp }}</span>
+      </div>
+      <p class="history-input">&ldquo;{{ r.user_input }}&rdquo;</p>
+      <p class="history-meta">Confidence: {{ (r.confidence * 100) | round(1) }}% &middot; Specialist: {{ r.specialist }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-state">No history yet &mdash; or MongoDB isn't connected. Run a symptom check, or start
+  MongoDB and set MONGO_URI.</p>
+  {% endif %}
+</main>
+</body>
+</html>

@@ -1,0 +1,317 @@
+:root {
+  --pine: #163832;
+  --pine-deep: #0e2620;
+  --sage: #E4EDE8;
+  --sage-line: #C7D6CE;
+  --paper: #FAFAF7;
+  --coral: #E8674A;
+  --amber: #C98A2C;
+  --ink: #16211D;
+  --ink-soft: #566A61;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, sans-serif;
+  line-height: 1.5;
+  position: relative;
+}
+
+h1, h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* ---------- Signature: faint ECG pulse line across the top ---------- */
+.pulse-bg {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  color: var(--sage-line);
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.pulse-bg svg { width: 100%; height: 100%; }
+#pulse-path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: draw-pulse 3.5s ease-out forwards;
+}
+@keyframes draw-pulse {
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #pulse-path { animation: none; stroke-dashoffset: 0; }
+}
+
+/* ---------- Header ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--pine); }
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  background: var(--pine);
+  color: var(--paper);
+  border-radius: 8px;
+  font-size: 16px;
+}
+nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-left: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+nav a:hover, nav a:focus-visible { color: var(--pine); border-color: var(--coral); }
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero { padding: 48px 0 32px; }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--coral);
+  margin: 0 0 12px;
+}
+.hero h1 { font-size: 40px; color: var(--pine-deep); }
+.subhead { color: var(--ink-soft); font-size: 16px; max-width: 56ch; margin-top: 14px; }
+
+/* ---------- Input card ---------- */
+.input-card {
+  background: #fff;
+  border: 1px solid var(--sage-line);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 1px 2px rgba(22, 56, 50, 0.04);
+}
+.input-card label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pine);
+  margin-bottom: 8px;
+}
+#symptom-input {
+  width: 100%;
+  border: 1px solid var(--sage-line);
+  border-radius: 10px;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+  background: var(--sage);
+  color: var(--ink);
+}
+#symptom-input:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 1px;
+}
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.location-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.location-toggle input { accent-color: var(--pine); }
+
+#check-btn {
+  background: var(--pine);
+  color: var(--paper);
+  border: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+#check-btn:hover { background: var(--pine-deep); }
+#check-btn:active { transform: scale(0.98); }
+#check-btn:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+#check-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.disclaimer-line {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* ---------- Results ---------- */
+.result-area { margin-top: 28px; }
+.result-area.hidden { display: none; }
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.result-card {
+  background: #fff;
+  border: 1px solid var(--sage-line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.result-card.primary, .explanation-card, .remedies-card, .redflags-card {
+  grid-column: span 2;
+}
+.card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+.disease-name { font-size: 26px; color: var(--pine-deep); }
+
+.confidence-bar {
+  background: var(--sage);
+  height: 8px;
+  border-radius: 999px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+.confidence-fill {
+  height: 100%;
+  background: var(--coral);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.confidence-text { font-size: 13px; color: var(--ink-soft); margin: 6px 0 0; }
+
+.top3-list { margin-top: 14px; font-size: 13px; color: var(--ink-soft); }
+.top3-list span { display: inline-block; margin-right: 14px; }
+
+.urgency-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.urgency-badge.emergency { background: #FBE4DD; color: #B23B1E; }
+.urgency-badge.soon { background: #FBEFDA; color: #92620F; }
+.urgency-badge.routine { background: var(--sage); color: var(--pine); }
+.urgency-note { font-size: 14px; color: var(--ink-soft); margin-top: 10px; }
+
+.specialist-name { font-size: 16px; font-weight: 600; color: var(--pine-deep); }
+.nearby-note { font-size: 13px; color: var(--ink-soft); margin-top: 8px; }
+
+.explanation-text { font-size: 15px; color: var(--ink); }
+
+.remedies-list, .redflags-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.remedies-list li, .redflags-list li { margin-bottom: 6px; }
+.redflags-list { color: #92260F; }
+
+.ai-disclaimer {
+  grid-column: span 2;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .topbar { padding: 16px 20px; }
+  .hero h1 { font-size: 30px; }
+  .result-grid { grid-template-columns: 1fr; }
+  .result-card.primary, .explanation-card, .remedies-card, .redflags-card, .ai-disclaimer {
+    grid-column: span 1;
+  }
+}
+
+/* ---------- History page ---------- */
+.history-list { display: flex; flex-direction: column; gap: 12px; }
+.history-item {
+  background: #fff;
+  border: 1px solid var(--sage-line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.history-item-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--pine-deep);
+}
+.history-time { font-size: 12px; color: var(--ink-soft); }
+.history-input { font-size: 14px; color: var(--ink-soft); font-style: italic; margin: 8px 0; }
+.history-meta { font-size: 12px; color: var(--ink-soft); margin: 0; }
+.empty-state { color: var(--ink-soft); }
+
+/* Responsive and accessible refinements */
+html { scroll-behavior: smooth; }
+textarea { width: 100%; min-width: 0; }
+.input-row { flex-wrap: wrap; }
+.result-card, .history-item { min-width: 0; overflow-wrap: anywhere; }
+.nearby-note a { display: inline-block; margin-top: 6px; color: var(--pine); font-weight: 600; text-underline-offset: 3px; }
+#symptom-input:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .topbar { gap: 12px; padding: 14px 16px; flex-wrap: wrap; }
+  .brand-name { font-size: 14px; }
+  nav { display: flex; gap: 16px; flex-wrap: wrap; }
+  nav a { margin-left: 0; font-size: 13px; }
+  .container { padding: 12px 16px 48px; }
+  .hero { padding: 30px 0 22px; }
+  .hero h1 { font-size: clamp(28px, 8vw, 36px); line-height: 1.12; }
+  .subhead { font-size: 14px; }
+  .input-card { padding: 18px; }
+  .input-row { align-items: stretch; flex-direction: column; }
+  #check-btn { width: 100%; min-height: 46px; }
+  .location-toggle { align-items: flex-start; }
+  .result-card { padding: 16px; }
+  .disease-name { font-size: 23px; }
+  .history-item-top { gap: 8px; flex-direction: column; }
+}
+@media (max-width: 380px) {
+  .brand { gap: 7px; }
+  .brand-name { font-size: 12px; }
+  .container { padding-left: 12px; padding-right: 12px; }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medical AI Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="pulse-bg" aria-hidden="true">
+  <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+    <path id="pulse-path" d="M0,60 L200,60 L230,60 L250,20 L270,100 L290,60 L320,60 L1200,60"
+          fill="none" stroke="currentColor" stroke-width="2"/>
+  </svg>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">+</span>
+    <span class="brand-name">Medical AI Assistant</span>
+  </div>
+  <nav>
+    <a href="/">Check symptoms</a>
+    <a href="/history">History</a>
+  </nav>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <p class="eyebrow">NLP &middot; Disease Prediction &middot; LLM Reasoning</p>
+    <h1>Tell it what you're feeling.</h1>
+    <p class="subhead">Describe your symptoms in plain language. The assistant reads them, predicts the
+      most likely condition, and lines up remedies, red-flags, and the right specialist &mdash;
+      in seconds.</p>
+  </section>
+
+  <section class="input-card">
+    <label for="symptom-input">Your symptoms</label>
+    <textarea id="symptom-input" rows="3"
+      placeholder="e.g. I have headache and fever since two days, feeling very tired"></textarea>
+    <div class="input-row">
+      <label class="location-toggle">
+        <input type="checkbox" id="use-location">
+        Use my location for nearby specialists
+      </label>
+      <button id="check-btn">Check symptoms</button>
+    </div>
+    <p class="disclaimer-line">This tool gives AI-generated suggestions, not a medical diagnosis.</p>
+  </section>
+
+  <section id="result-area" class="result-area hidden"></section>
+</main>
+
+<template id="result-template">
+  <div class="result-grid">
+    <div class="result-card primary">
+      <p class="card-label">Most likely condition</p>
+      <h2 class="disease-name"></h2>
+      <div class="confidence-bar"><div class="confidence-fill"></div></div>
+      <p class="confidence-text"></p>
+
+      <div class="top3-list"></div>
+    </div>
+
+    <div class="result-card urgency-card">
+      <p class="card-label">When to visit a doctor</p>
+      <p class="urgency-badge"></p>
+      <p class="urgency-note"></p>
+    </div>
+
+    <div class="result-card">
+      <p class="card-label">Specialist recommendation</p>
+      <p class="specialist-name"></p>
+      <p class="nearby-note"></p>
+    </div>
+
+    <div class="result-card explanation-card">
+      <p class="card-label">What this means</p>
+      <p class="explanation-text"></p>
+    </div>
+
+    <div class="result-card remedies-card">
+      <p class="card-label">Home remedies</p>
+      <ul class="remedies-list"></ul>
+    </div>
+
+    <div class="result-card redflags-card">
+      <p class="card-label">Seek care immediately if</p>
+      <ul class="redflags-list"></ul>
+    </div>
+
+    <p class="ai-disclaimer"></p>
+  </div>
+</template>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
